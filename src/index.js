@@ -13,6 +13,10 @@ import { OrderProvider } from './components/OrderContext';
 import Veg from './components/Veg';
 import Footer from './components/Footer';
 import DineIn from './components/DineIn';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -39,6 +43,7 @@ root.render(
     
     </BrowserRouter>
     </OrderProvider>
+    <ToastContainer position="top-center" />
   </React.StrictMode>
 );
 reportWebVitals();

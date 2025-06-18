@@ -8,8 +8,8 @@ function Footer() {
       <h1>
       : Srisanjainallathambi@gmail.com
       </h1>
+      <h3>        © 2024 Copyright:    @wondercoder</h3>
     </article>
-    <h3>        © 2024 Copyright:    @wondercoder</h3>
     </section>
   );
 }

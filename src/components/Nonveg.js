@@ -1,6 +1,8 @@
 import React, { useState,useContext } from 'react';
 import Cart from './Cart';
 import { OrderContext } from './OrderContext';
+import { toast } from 'react-toastify';
+
 function Nonveg()
 {
     const initialfooditems=[
@@ -34,7 +36,7 @@ function Nonveg()
       }
 
 
-    const order = (item) => {
+    /* const order = (item) => {
         console.log("Order list:", orderList);
         console.log("added",item);
         const existItem=orderList.find((food)=>food.name===item.name);
@@ -47,7 +49,47 @@ function Nonveg()
             item.quantity++;
             setOrderList([...orderList,item]);
         }
+    }; */
+
+   /*  const order = (item) => {
+        const existItem = orderList.find((food) => food.name === item.name);        
+        if (existItem) {
+            toast.info(`${item.name} is already in your cart`, { autoClose: 1500 });
+        } else {
+            item.quantity++;
+            setOrderList([...orderList, item]);
+            toast.success(`${item.name} added to your cart`, { autoClose: 1500 });
+        }
+        toast.success("message", {
+            position: "bottom-right",
+            hideProgressBar: false,
+            theme: "dark"
+          });
+          
     };
+     */
+    const order = (item) => {
+        const existingItemIndex = orderList.findIndex(food => food.name === item.name);
+      
+        if (existingItemIndex !== -1) {
+          // Clone the order list
+          const updatedOrderList = [...orderList];
+          // Increase the quantity
+          updatedOrderList[existingItemIndex].quantity += 1;
+          setOrderList(updatedOrderList);
+          toast.info(`${item.name} quantity updated`, {
+            position: "bottom-right",
+            theme: "dark"
+          });
+        } else {
+          setOrderList([...orderList, { ...item, quantity: 1 }]);
+          toast.success(`${item.name} added to your cart`, {
+            position: "bottom-right",
+            theme: "dark"
+          });
+        }
+      };
+      
 
     const SearchList = (searchValue) => {
         setsearchItem(searchValue);
@@ -77,7 +119,7 @@ function Nonveg()
  */}                    </div>
                 </div>
             </section>
-
+            
             <h1 className='heading'>MUTTON</h1>
             <section className='mutton'>
                 {fillterdmutton.map((mutt, index) => (

@@ -1,6 +1,7 @@
 import React from "react";
 import cover from"../images/FOOD STALL (1).png";
 import { useNavigate } from "react-router-dom";
+
 function Home()
 {
 const navigate = useNavigate();
