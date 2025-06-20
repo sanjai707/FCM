@@ -1,0 +1,80 @@
+/* General Auth Page Style */
+.form {
+    background-color: #111;
+    padding: 40px;
+    margin: 80px auto;
+    max-width: 400px;
+    border-radius: 12px;
+    border: 2px solid yellow;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: yellow;
+    animation: fadeInUp 0.6s ease-in-out;
+  }
+  
+  .reg-log{
+    cursor: pointer;
+    color: blue;
+  }
+  /* Input Fields */
+  .form input {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid yellow;
+    outline: none;
+    background-color: #000;
+    color: yellow;
+  }
+  
+  .form input::placeholder {
+    color: rgba(255, 255, 0, 0.5);
+  }
+  
+  /* Buttons */
+  .form button {
+    padding: 10px;
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .form button:hover {
+    background-color: #ffea00;
+    box-shadow: 0 3px 6px rgba(255, 255, 0, 0.4);
+  }
+  
+  /* Headings */
+  .form h2 {
+    text-align: center;
+    color: yellow;
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+  
+  /* Animation Keyframe */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Optional Links */
+  .form a {
+    text-align: center;
+    color: yellow;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+  

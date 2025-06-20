@@ -46,6 +46,15 @@ body {
 .nav-part-3 {
   display: flex;
   align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.nav-part-3>h1{
+  font-weight: bold;
+  align-self: center;
+  color: red;
+  font-size: medium;
 }
 
 /* Home Section */
@@ -55,6 +64,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.main{
+  display: flex;
+  flex-direction: row;
 }
 
 .home-img > img {
@@ -102,6 +115,26 @@ body {
   50% {
     transform: scale(1.05);
   }
+}
+.dine-in>img{
+  width:400px;
+  height: auto;
+
+}
+.dine-in{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:140px;
+}
+.search-submit
+{
+  padding: 3px;
+}
+.in{
+  border-radius: 20%;
+  padding: 5px;
+  font-style: inherit;
 }
 
 /* Categories */
@@ -222,7 +255,14 @@ button {
   height: 100px;
   border-radius: 4px;
 }
-
+.item-quantity{
+  display: flex;
+  gap:2px;
+  align-items: center;
+}
+.item-name{
+  color: white;
+}
 .item-quantity button {
   padding: 5px 10px;
   background-color: #4caf50;
@@ -233,13 +273,24 @@ button {
 .item-quantity button:hover {
   background-color: #45a049;
 }
-
+.empty-cart{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:50px;
+  padding: 50px;
+}
 .cart-total {
   text-align: right;
   margin-top: 20px;
   color: yellow;
 }
-
+.clear-button{
+  width: 9rem;
+  color: red;
+  border-radius: 5px;
+  cursor:pointer;
+}
 .checkout-button {
   width: 9rem;
   background-color: #ff5722;
@@ -275,9 +326,9 @@ button {
 .footer-container {
   background-color: black;
   color: yellow;
-  padding: 25px 0;
+  padding: 15px 0;
   text-align: center;
-  border-top: 2px solid yellow;
+  border-top: 2px solid rgb(11, 11, 9);
   width: 100%;
   font-size: 14px;
 }
@@ -323,4 +374,3 @@ button {
     width: auto;
   }
 }
-

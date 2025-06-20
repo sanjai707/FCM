@@ -1,8 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { OrderContext } from './OrderContext';
 import jsPDF from 'jspdf';
+import { toast } from 'react-toastify';
+import { Navigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
+  const navigate =useNavigate();
   const { orderList, setOrderList } = useContext(OrderContext);
   const[mobile,setMobile]=useState('');
   const [name,setName]=useState('');
@@ -30,6 +34,30 @@ function Cart() {
   //generating bill pdf by using jsPDF
   const billNo=1;
   const generatePdf = () => {
+      const nameTrimmed = name.trim();
+      const mobileTrimmed =mobile.trim();
+
+      const mobileRegex=/^[6-9]\d{9}$/;
+    if(!nameTrimmed||!mobileTrimmed)
+    {
+      toast.error("Yo Bro feel hungry ? Enter the details ", {
+        position: "top-center",
+        theme: "dark"
+      });
+      return;
+    }
+    if(!mobileRegex.test(mobileTrimmed))
+    {
+      toast.error("Enter a valid 10-digit mobile number", {
+        position: "top-center",
+        theme: "dark"
+      });
+      return;
+    }
+    toast.success("Generating invoice...", {
+      position: "top-center",
+      theme: "dark"
+    });
     const doc = new jsPDF();
     doc.setFont("helvetica");
 
@@ -86,7 +114,10 @@ function Cart() {
   const handleChange=(e)=>{
     setDineInfo(e.target.value);
   }
-  return (
+  const clearcart =()=>{
+    setOrderList([]);
+  }
+/*   return (
     <section className="cart-container">
       <h1 className='heading'>Your Cart</h1>
       {orderList.length === 0 ? (
@@ -96,7 +127,7 @@ function Cart() {
           {orderList.map((item, index) => (
             <li key={index} className="cart-item">
               <div className="item-details">
-                <h3>{item.name}</h3>
+                <h3 className='item-name'>{item.name}</h3>
                 <p>Price: ₹{item.price.toFixed(2)}</p>
                 <p>Subtotal: ₹{(item.price * item.quantity).toFixed(2)}</p>
               </div>
@@ -108,15 +139,22 @@ function Cart() {
             </li>
             
           ))}
+
            {orderList.length > 0 && (
         <div className="cart-total">
           <h3>Total Cost: ₹{totalCost.toFixed(2)}</h3>
         </div>
       )}
           { !ischeckOut ? (
-                      <button className="checkout-button" onClick={handleCheckoutClick}>Checkout</button>
+                      <>
+                      <button className="checkout-button" onClick={handleCheckoutClick}>Checkout
 
-          ):(
+                      </button>
+                     <button className='clear-button' onClick={clearcart}>clear
+
+                     </button>
+            </>
+                    ):(
             <>
           <section className="container">
           <form className="toggle" id='info-form'>
@@ -147,6 +185,7 @@ function Cart() {
           </form>
         </section>
         <button className="checkout-button"form='info-form' type='sumit' onClick={generatePdf}>Checkout</button>
+        <button className='clear-button' form='info-form' type='clear' onClick={clearcart}>clear</button>
       </>)
 }
         </ul>
@@ -154,6 +193,108 @@ function Cart() {
       )}
 
     </section>
-  );
+  ); */
+ return (
+  <section className="cart-container">
+    <h1 className='heading'>Your Cart</h1>
+
+    {orderList.length === 0 ? (
+      <section className='empty-cart'>
+      <p>Your cart is empty.</p>
+      <button onClick={()=>{navigate("/categories")}} >order now</button>
+      </section>
+    ) : (
+      <>
+        <ul className="cart-list">
+          {orderList.map((item, index) => (
+            <li key={index} className="cart-item">
+              <div className="item-details">
+                <h3 className='item-name'>{item.name}</h3>
+                <p>Price: ₹{item.price.toFixed(2)}</p>
+                <p>Subtotal: ₹{(item.price * item.quantity).toFixed(2)}</p>
+              </div>
+              <div className="item-quantity">
+                <button onClick={() => decreaseQuantity(index)}>-</button>
+                <span>{item.quantity}</span>
+                <button onClick={() => increaseQuantity(index)}>+</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        {orderList.length > 0 && (
+          <div className="cart-total">
+            <h3>Total Cost: ₹{totalCost.toFixed(2)}</h3>
+          </div>
+        )}
+
+        {!ischeckOut ? (
+          <>
+            <button className="checkout-button" onClick={handleCheckoutClick}>
+              Checkout
+            </button>
+            <button className='clear-button' onClick={clearcart}>
+              Clear
+            </button>
+          </>
+        ) : (
+          <>
+            <section className="container">
+              <form className="toggle" id='info-form'>
+                <article className='costumer-info'>
+                  <label>Name</label>
+                  <input
+                    type='text'
+                    placeholder='Enter Name...'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    aria-required
+                  />
+                  <label>Mobile No</label>
+                  <input
+                    type='tel'
+                    placeholder='Enter Mobile no...'
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                    required
+                  />
+                </article>
+
+                <input
+                  type="radio"
+                  id="choice1"
+                  name="choice"
+                  value="Dine In"
+                  onChange={handleChange}
+                  checked={dineInfo === "Dine In"}
+                />
+                <label htmlFor="choice1">Dine In</label>
+
+                <input
+                  type="radio"
+                  id="choice2"
+                  name="choice"
+                  value="Take Away"
+                  onChange={handleChange}
+                  checked={dineInfo === "Take Away"}
+                />
+                <label htmlFor="choice2" className='off-label'>Take Away</label>
+
+                <span className='selected' aria-hidden='true'></span>
+              </form>
+            </section>
+
+            <button className="checkout-button" form='info-form' type='button' onClick={generatePdf}>
+              Checkout
+            </button>
+            <button className='clear-button' form='info-form' type='button' onClick={clearcart}>
+              Clear
+            </button>
+          </>
+        )}
+      </>
+    )}
+  </section>
+);
 }
 export default Cart;

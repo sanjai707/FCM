@@ -109,6 +109,7 @@ function Nonveg()
                     <div className="fc">FS</div>
                     <div className="search-submit">
                         <input
+                            className='in'
                             type="text"
                             value={searchItem}
                             id="search"
