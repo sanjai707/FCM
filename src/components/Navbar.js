@@ -86,20 +86,42 @@ function Navbar() {
 
 export default Navbar;
 */
-import React, { useState } from "react";
+
+
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import fs from "../images/Fs.png";
 import log from "../images/log-in.png";
 import food from "../images/mdi_food-turkey.png";
+import noodle from "../images/mdi_noodles.png"; // Not used, consider removing
 import cart from "../images/cart.png";
 import dine from "../images/Vector.png";
-import { useNavigate } from "react-router-dom";
-
+import { useContext } from 'react';
+import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
+import Login from "./Login";
 function Navbar() {
+  const { user, isAuthenticated,logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setIsMobileMenuOpen((prev)=>!prev);
+  };
+  const handleNavigate=(path)=>{
+    navigate(path);
+    setIsMobileMenuOpen(false);
+  }
+  
+  const handleAuthClick = () => {
+    if (isAuthenticated) {
+      logout();
+      navigate("/");
+    } else 
+    {
+      navigate("/login");
+    }
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -112,15 +134,58 @@ function Navbar() {
         ☰
       </div>
 
-      <article className={`nav-part-2 ${isMobileMenuOpen ? "open" : ""}`}>
+      {/* <article className={`nav-part-2 ${isMobileMenuOpen ? "open" : ""}`}>
+
         <article className="nav-part-2-row"> <img className="nav-icon" onClick={() => navigate("/categories")} src={food} alt="Food" /> <h1>Food</h1></article>
         <article className="nav-part-2-row" ><img className="nav-icon" onClick={() => navigate("/Cart")} src={cart} alt="Cart" /> <h1>Cart</h1></article>
         <article className="nav-part-2-row"><img className="nav-icon" onClick={() => navigate("/dinein")} src={dine} alt="Dine In" /> <h1>Dine-in</h1></article>
+        
+        
+        {< article className="nav-part-2-row logout-row" onClick={handleAuthClick}>
+          <img className="nav-icon" src={log} alt={isAuthenticated ? "Logout" : "Login"} />
+          <h1>{isAuthenticated ? "Logout" : "Login"}</h1>
+        </article> }
+      
+      
       </article>
 
-      <article className="nav-part-3">
-        <img src={log} alt="Login" />
-      </article>
+      <article className="nav-part-3" >
+      {user && <p>Hello, {user.username}</p>}
+      <article className=" nav-part-2-row logout-row " onClick={handleAuthClick}>
+          <h1>{isAuthenticated ? "Logout" : "Log In"}</h1>
+        </article>
+        <img  src={log} alt={isAuthenticated ? "Logout":"Log In"}/>
+      </article> */}
+      <article className={`nav-part-2 ${isMobileMenuOpen ? "open" : ""}`}>
+  <article className="nav-part-2-row" onClick={() => navigate("/categories")}>
+    <img className="nav-icon" src={food} alt="Food" />
+    <h1>Food</h1>
+  </article>
+
+  <article className="nav-part-2-row" onClick={() => navigate("/Cart")}>
+    <img className="nav-icon" src={cart} alt="Cart" />
+    <h1>Cart</h1>
+  </article>
+
+  <article className="nav-part-2-row" onClick={() => navigate("/dinein")}>
+    <img className="nav-icon" src={dine} alt="Dine In" />
+    <h1>Dine-in</h1>
+  </article>
+
+  {/* 🔻 Visible ONLY on mobile/tablet (hidden on desktop) */}
+  <article className="nav-part-2-row logout-row" onClick={handleAuthClick}>
+    <img className="nav-icon" src={log} alt={isAuthenticated ? "Logout" : "Login"} />
+    <h1>{isAuthenticated ? "Logout" : "Login"}</h1>
+  </article>
+</article>
+
+{/* 🔺 Visible ONLY on desktop (hidden on mobile) */}
+<article className="nav-part-3" onClick={handleAuthClick}>
+  {user && <p style={{ color: "yellow" }}>Hello, {user.username}</p>}
+  <h1 style={{ color: "red", fontWeight: "bold" }}>{isAuthenticated ? "Logout" : "Login"}</h1>
+  <img src={log} alt={isAuthenticated ? "Logout" : "Login"} />
+</article>
+
     </section>
   );
 }
