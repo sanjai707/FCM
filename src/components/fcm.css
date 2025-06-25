@@ -11,6 +11,12 @@ body {
   background-color: #000;
   color: yellow;
 }
+.nav-com{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 
 /* Navigation */
 .nav-body {

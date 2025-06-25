@@ -76,7 +76,7 @@ function Navbar() {
       </article>
 
       <article className="nav-part-3">
-      {user && <p>Hello, {user.username}</p>&&<Login/>}
+      {user && <p>Hello, {user.username}</p>}
       {user && <h1 onClick={logout} >Logout</h1>}
         <img onClick={()=> navigate('/login')} src={log} alt="Login" />
       </article>
