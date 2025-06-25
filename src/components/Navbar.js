@@ -26,7 +26,7 @@ function Navbar()
         </section>
     )
 }
-export default Navbar; */
+export default Navbar; 
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -79,6 +79,47 @@ function Navbar() {
       {user && <p>Hello, {user.username}</p>}
       {user && <h1 onClick={logout} >Logout</h1>}
         <img onClick={()=> navigate('/login')} src={log} alt="Login" />
+      </article>
+    </section>
+  );
+}
+
+export default Navbar;
+*/
+import React, { useState } from "react";
+import fs from "../images/Fs.png";
+import log from "../images/log-in.png";
+import food from "../images/mdi_food-turkey.png";
+import cart from "../images/cart.png";
+import dine from "../images/Vector.png";
+import { useNavigate } from "react-router-dom";
+
+function Navbar() {
+  const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  return (
+    <section className="nav-body">
+      <article className="nav-part-1">
+        <img onClick={() => navigate("/")} src={fs} alt="Logo" />
+      </article>
+
+      <div className="hamburger" onClick={toggleMenu}>
+        ☰
+      </div>
+
+      <article className={`nav-part-2 ${isMobileMenuOpen ? "open" : ""}`}>
+        <article className="nav-part-2-row"> <img className="nav-icon" onClick={() => navigate("/categories")} src={food} alt="Food" /> <h1>Food</h1></article>
+        <article className="nav-part-2-row" ><img className="nav-icon" onClick={() => navigate("/Cart")} src={cart} alt="Cart" /> <h1>Cart</h1></article>
+        <article className="nav-part-2-row"><img className="nav-icon" onClick={() => navigate("/dinein")} src={dine} alt="Dine In" /> <h1>Dine-in</h1></article>
+      </article>
+
+      <article className="nav-part-3">
+        <img src={log} alt="Login" />
       </article>
     </section>
   );

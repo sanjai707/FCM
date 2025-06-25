@@ -124,7 +124,7 @@ function Nonveg()
             <h1 className='heading'>MUTTON</h1>
             <section className='mutton'>
                 {fillterdmutton.map((mutt, index) => (
-                    <article className='mut-va' key={index}>
+                    <article className='mut-va' key={index}  style={{ "--order": index }}>
                         <img src={process.env.PUBLIC_URL + `/non-veg/${mutt.name.toLowerCase()}.jpg`} alt="Logo" />
                         <h1>{mutt.name}</h1>
                         <h1>Price: {mutt.price}</h1>
@@ -135,10 +135,10 @@ function Nonveg()
                 ))}
             </section>
 
-            <h1>CHICKEN</h1>
+            <h1 className='heading'>CHICKEN</h1>
             <section className='mutton'>
                 {fillterdchic.map((chic, index) => (
-                    <article className='mut-va' key={index}>
+                    <article className='mut-va' key={index}  style={{ "--order": index }}>
                         <img src={process.env.PUBLIC_URL + `/non-veg/${chic.name.toLowerCase()}.jpg`} alt="Logo" />
                         <h1>{chic.name}</h1>
                         <h1>Price: {chic.price}</h1>
@@ -149,10 +149,10 @@ function Nonveg()
                 ))}
             </section>
 
-            <h1>FISH</h1>
+            <h1 className='heading'>FISH</h1>
             <section className='mutton'>
                 {fillterdfish.map((fish, index) => (
-                    <article className='mut-va' key={index}>
+                    <article className='mut-va' key={index}  style={{ "--order": index }}>
                         <img src={process.env.PUBLIC_URL + `/non-veg/${fish.name.toLowerCase()}.jpg`} alt="Logo" />
                         <h1>{fish.name}</h1>
                         <h1>Price: {fish.price}</h1>
