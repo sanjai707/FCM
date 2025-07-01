@@ -1,6 +1,7 @@
 import React, { useState,useContext } from 'react';
 import Cart from './Cart';
 import { OrderContext } from './OrderContext';
+import { toast } from 'react-toastify';
 
 function Veg()
 {
@@ -21,36 +22,26 @@ function Veg()
         console.error("orderList is not an array:", orderList);
         return <div>Error: orderList is not an array</div>;
     }
-   /*  const adder = (index) => {
-        const updatedFoodItems = [...foodItems];
-        updatedFoodItems[index].quantity++;
-        setFoodItems(updatedFoodItems);
-
-        const updatedOrderList = updatedFoodItems.filter(item => item.quantity > 0);
-        setOrderList(updatedOrderList);
-    };
-
-    const lesser = (index) => {
-        const updatedFoodItems = [...foodItems];
-        if (updatedFoodItems[index].quantity > 0) 
-        {
-            updatedFoodItems[index].quantity--;
-        }
-        setFoodItems(updatedFoodItems);
-
-        const updatedOrderList = updatedFoodItems.filter(item => item.quantity > 0);
-        setOrderList(updatedOrderList);
-    };
-    */ const order = (item) => {
+    const order = (item) => {
         console.log("Order list:", orderList);
-        const existItem=orderList.find((food)=>food.name===item.name)
-        if(existItem)
+        const existingItemIndex=orderList.findIndex((food)=>food.name===item.name);
+        if(existingItemIndex != -1)
         {
-            console.info("Item already added",item.name);
+            const updatedOrderList =[...orderList];
+            updatedOrderList[existingItemIndex].quantity +=1;
+            setOrderList(updatedOrderList)
+            toast.info(`${item.name} quantity updated`, {
+                position: "bottom-right",
+                theme: "dark"
+              });
         }
         else{
-            item.quantity++;
-            setOrderList([...orderList,item]);
+            
+            setOrderList([...orderList,{...item,quantity: 1}]);
+            toast.success(`${item.name} added to your cart`,{
+                position:"bottom-right",
+                theme: "dark"
+            });
         }
     };
 
@@ -68,67 +59,33 @@ function Veg()
                     <div className="fc">FS</div>
                     <div className="search-submit">
                         <input
+                            className='in'
                             type="text"
                             value={searchItem}
                             id="search"
                             onChange={(e) => SearchList(e.target.value)}
                             placeholder="Search the food items"
                         />
-                        
+                          {/*
                         <button className="submit" type="submit">SUBMIT</button>
-                        <Cart/>
+                       <Cart/> */}
                     </div>
                 </div>
             </section>
 
-            <h1 className='heading'>Veg</h1>
+            <h1 className='heading'>VEG</h1>
             <section className='mutton'>
                 {searchResults.map((veg, index) => (
                     <article className='mut-va' key={index}>
-                        <img src={process.env.PUBLIC_URL + `/non-veg/${veg.name.toLowerCase()}.jpg`} alt="veg" />
+                        <img src={process.env.PUBLIC_URL + `/veg/${veg.name.toLowerCase()}.jpg`} alt="veg" />
                         <h1>{veg.name}</h1>
                         <h1>Price: {veg.price}</h1>
                         <article className='but-n'>
-                           {/*  <button onClick={() => lesser(index)}>-</button>
-                            <h1 id='num'>{veg.quantity}</h1>
-                            <button onClick={() => adder(index)}>+</button> */}
                         <button onClick={()=>order(veg)}>Add</button>
                         </article>
                     </article>
                 ))}
             </section>
-{/* 
-            <h1>CHICKEN</h1>
-            <section className='mutton'>
-                {fillterdchic.map((chic, index) => (
-                    <article className='mut-va' key={index}>
-                        <img src={process.env.PUBLIC_URL + `/non-veg/${chic.name.toLowerCase()}.jpg`} alt="Logo" />
-                        <h1>{chic.name}</h1>
-                        <h1>Price: {chic.price}</h1>
-                        <article className='but-n'>
-                            <button onClick={() => lesser(foodItems.indexOf(chic))}>-</button>
-                            <h1 id='num'>{chic.quantity}</h1>
-                            <button onClick={() => adder(foodItems.indexOf(chic))}>+</button>
-                        </article>
-                    </article>
-                ))}
-            </section>
-
-            <h1>FISH</h1>
-            <section className='mutton'>
-                {fillterdfish.map((fish, index) => (
-                    <article className='mut-va' key={index}>
-                        <img src={process.env.PUBLIC_URL + `/non-veg/${fish.name.toLowerCase()}.jpg`} alt="Logo" />
-                        <h1>{fish.name}</h1>
-                        <h1>Price: {fish.price}</h1>
-                        <article className='but-n'>
-                            <button onClick={() => lesser(foodItems.indexOf(fish))}>-</button>
-                            <h1 id='num'>{fish.quantity}</h1>
-                            <button onClick={() => adder(foodItems.indexOf(fish))}>+</button>
-                        </article>
-                    </article>
-                ))}
-            </section> */}
         </section>
     );
 } 

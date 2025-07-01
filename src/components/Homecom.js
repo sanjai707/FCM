@@ -5,7 +5,7 @@ function Homecom()
     return(
     <section className='main'>
     <Home/>
-    <Homepic/>
+        <Homepic/>
     </section> 
     )
 }export default Homecom;
